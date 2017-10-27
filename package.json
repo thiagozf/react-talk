@@ -1,54 +1,44 @@
 {
-  "name": "my-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "enzyme": "^3.1.0",
-    "enzyme-adapter-react-16": "^1.0.2",
-    "enzyme-to-json": "^3.1.4",
-    "history": "^4.7.2",
-    "hoist-non-react-statics": "^2.3.1",
-    "immutable": "^3.8.2",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-helmet": "^5.2.0",
-    "react-loading": "^1.0.1",
-    "react-redux": "^5.0.6",
-    "react-router-dom": "4.1.1",
-    "react-router-redux": "5.0.0-alpha.6",
-    "react-scripts": "1.0.14",
-    "redux": "^3.7.2",
-    "redux-immutable": "^4.0.0",
-    "redux-saga": "^0.16.0",
-    "styled-components": "^2.2.2",
-    "whatwg-fetch": "^2.0.3"
-  },
+  "name": "reveal.js",
+  "version": "3.5.0",
+  "description": "The HTML Presentation Framework",
+  "homepage": "http://lab.hakim.se/reveal-js",
+  "subdomain": "revealjs",
+  "main": "js/reveal.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && yarn run delete-maps",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "delete-maps": "yarn run delete-map-files && yarn run delete-references-to-map-files",
-    "delete-map-files": "find ./build -name '*.map' -delete",
-    "delete-references-to-map-files": "find ./build -regex '.*\\.\\(js\\|css\\)' -exec sed -i -E '\\/[\\*\\/]#\\ssourceMappingURL=main(\\.[0-9a-f]+)?\\.(css|js)\\.map(\\*\\/)?/g' {} +"
+    "test": "grunt test",
+    "start": "grunt serve",
+    "build": "grunt"
+  },
+  "author": {
+    "name": "Hakim El Hattab",
+    "email": "hakim.elhattab@gmail.com",
+    "web": "http://hakim.se"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hakimel/reveal.js.git"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   },
   "devDependencies": {
-    "flow-bin": "^0.57.3",
-    "jest-styled-components": "^4.9.0"
+    "express": "~4.14.0",
+    "grunt": "~1.0.1",
+    "grunt-autoprefixer": "~3.0.3",
+    "grunt-cli": "~1.2.0",
+    "grunt-contrib-connect": "~0.11.2",
+    "grunt-contrib-cssmin": "~0.14.0",
+    "grunt-contrib-jshint": "~0.11.3",
+    "grunt-contrib-qunit": "~1.2.0",
+    "grunt-contrib-uglify": "~0.9.2",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-sass": "~1.2.0",
+    "grunt-retire": "~0.3.10",
+    "grunt-zip": "~0.17.1",
+    "mustache": "~2.2.1",
+    "node-sass": "~3.13.0",
+    "socket.io": "^1.4.8"
   },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "!src/index.js",
-      "!src/registerServiceWorker.js"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "statements": 98,
-        "branches": 91,
-        "functions": 98,
-        "lines": 98
-      }
-    }
-  }
+  "license": "MIT"
 }

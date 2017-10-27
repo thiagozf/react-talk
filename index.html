@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>React</title>
+
+		<meta name="description" content="Conceitos básicos e exemplos da biblioteca React">
+		<meta name="author" content="Thiago Zanivan Felisberto">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<h1>React</h1>
+					<h3>Conceitos básicos e exemplos</h3>
+					<br/>
+					<p>
+						<small>Thiago Zanivan / <a href="http://github.com/thiagozf">@thiagozf</a></small>
+					</p>
+				</section>
+
+				<section>
+					<h2>Minha experiência com React</h2>
+
+					<ul>
+						<li>Aproximadamente dois anos trabalhando diariamente com React em diferentes projetos</li>
+						<li>Contribuições em projetos da comunidade, como o styled-components e react-router</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>O que é?</h2>
+					<p>React é uma <b>biblioteca</b> JS com um único propósito:</p>
+					<p class="fragment"><b>criação de interfaces de usuário</b></p>
+				</section>
+
+				<section>
+					<h2>Primeira impressão</h2>
+					<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+							import React, { Component } from 'react';
+
+							class GosteiButton extends Component {
+								render() {
+									const { gostei, onClick } = this.props;
+									const texto = gostei ? 'gostei' : 'não gostei';
+									return (
+										&lt;div onClick={() => onClick(!gostei)}&gt;
+											Eu {text} de React. Clique para mudar!
+										&lt;/div&gt;
+									);
+								}
+							}
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Conceitos importantes</h2>
+					<ul>
+						<li class="fragment">Componentes</li>
+						<li class="fragment">Fluxo de dados unidirecional (Flux)</li>
+						<li class="fragment">Controle de estado</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Componentes</h2>
+						<p>O conceito mais importante para entender React...</p>
+						<p class="fragment"><b>... porque tudo em React é um componente!</b></p>
+					</section>
+
+					<section>
+						<p>Escrever um componente é como escrever um grupo de tags HTML</p>
+						<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+								import React, { Component } from 'react';
+
+								/**
+								 * Utilizar &lt;HelloMessage text='Hello World' /&gt; resultar&aacute; no seguinte HTML:
+								 * &lt;div&gt;Hello World&lt;/div&gt;
+								 */
+
+								class HelloMessage extends Component {
+									render() {
+										return (&lt;div&gt;{ this.props.text }&lt;/div&gt;);
+									}
+								}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>Apesar de simples, o conceito de <b>componentes</b> é <b>extremamente poderoso!</b></p>
+					</section>
+
+					<section>
+						<p>1. Podem ser agrupados/combinados para criar componentes maiores</p>
+						<pre><code class="javascript" data-trim contenteditable style="font-size: 18px;">
+								import React, { Component } from 'react';
+								import HelloMessage from 'components/HelloMessage';
+
+								/**
+								 * Utilizar &lt;HelloWorld /&gt; resultar&aacute; no seguinte HTML:
+								 * &lt;div&gt;Hello World&lt;/div&gt;
+								 */
+
+								class HelloWorld extends Component {
+									render() {
+										return (&lt;HelloMessage text="Hello World" /&gt;);
+									}
+								}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>2. Os efeitos de uma ação são previsíveis</p>
+						<br/>
+						<ul>
+							<li>Nada de controllers</li>
+							<li>Nada de directives</li>
+							<li>Nada de templates</li>
+							<li>Nada de listeners</li>
+							<li>Apenas "dumb" components!</li>
+						</ul>
+					</section>
+
+					<section>
+						<p>3. Possuem um ciclo de vida simples e bem definido</p>
+						<img height="500" data-src="img/lifecycle.png" alt="Ciclo de vida de um componente React">
+					</section>
+
+					<section>
+						<pre>Alguns eventos do ciclo de vida de um componente React
+							<code class="javascript" data-trim contenteditable style="font-size: 14px;">
+								import React, { Component } from 'react';
+
+								class MyComponentLyfecicle extends Component {
+									componentWillMount() {
+										console.log('componentWillMount()');
+									}
+									componentWillReceiveProps(nextProps) {
+										console.log('componentWillReceiveProps(nextProps)', nextProps);
+									}
+									render() {
+										console.log('render()');
+										return (&lt;div&gt;React's Lifecycle&lt;/div&gt;);;
+									}
+								}
+						</code></pre>
+					</section>
+
+					<section>
+						<p>4. Não se importam com dados, mas em como apresentá-los</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Como fazer todo "o resto" em aplicações React?</h2>
+						<p class="fragment">Utilizando diversas outras bibliotecas que trabalham muito bem em conjunto com o React!</p>
+					</section>
+
+					<section>
+						<h3>Aplicação</h3>
+						<br/>
+						<ul>
+							<li><b>React</b>: biblioteca de UI</li>
+							<li><b>Redux (ou Flux)</b>: gerenciamento de estado</li>
+							<li><b>Redux Saga</b>: comunicação assíncrona (backend)</li>
+							<li><b>Normalizr</b>: normalização de estruturas</li>
+							<li><b>Reselect</b>: transmitir dados para os componentes</li>
+							<li><b>Immutable.js</b>: provê estruturas imutáveis em JS</li>
+						<ul>
+					</section>
+
+					<section>
+						<h3>Testes</h3>
+						<ul>
+							<li><b>Jest</b>: escrita e execução de testes unitários</li>
+							<li><b>Enzyme</b>: utilitários para testes de componentes React</li>
+						<ul>
+					</section>
+
+					<section>
+						<h3>Tooling</h3>
+						<ul>
+							<li><b>Webpack</b>: module bundler</li>
+							<li><b>npm</b>: controle de dependências e scripts</li>
+							<li><b>flow</b>: verificação de tipos em JS</li>
+						<ul>
+					</section>
+				</section>
+
+				<section>
+						<section>
+							<h2>Arquitetura de uma aplicação React</h2>
+						</section>
+
+						<section>
+							<h2>Redux</h2>
+							<img height="500" data-src="img/redux.png" alt="Arquitetura Redux" />
+						</section>
+
+						<section>
+							<h2>State</h2>
+							<ul>
+								<li>Objeto que representa a situação atual da aplicação (dados)</li>
+								<li>Resultado de todos os eventos ocorridos desde a inicialização (event sourcing)</li>
+							</ul>
+						</section>
+
+						<section>
+							<h2>State</h2>
+							<ul>
+								<li><b>Fonte única de verdade da aplicação</b>: todo o estado é armazenado numa árvore de objetos dentro de uma mesma <b>store</b></li>
+								<li><b>Imutável</b>: a única forma de modificar o estado é emitindo uma <b>action</b>, ou seja, um objeto que descreva o que aconteceu</li>
+								<li><b>Atualizações por funções puras</b>: para especificar como o estado é transformado pelas ações, deve-se escrever <b>reducers</b> </li>
+							</ul>
+						</section>
+
+						<section>
+							<h2>UI</h2>
+							<p>Implementada por meio da composição de componentes React</p>
+							<pre><code class="javascript" data-trim contenteditable style="font-size: 14px;">
+									import React, { Component } from 'react';
+
+									class App extends Component {
+										render() {
+											return (
+												&lt;Header/&gt;
+												&lt;Content/&gt;
+												&lt;Footer/&gt;
+											)
+										}
+									}
+							</code></pre>
+						</section>
+
+						<section>
+							<h2>UI</h2>
+							<ul>
+								<li>É definida pelo <b>state</b> da aplicação</li>
+								<li>Interações do usuário são descritas por <b>action</b></li>
+							</ul>
+
+							<pre><code class="javascript" data-trim contenteditable style="font-size: 14px;">
+								class ListItem extends Component  {
+									static defaultProps = { checked: false, text: '', onClick: () => {} };
+									render() {
+										// "checked" e "text" estão conectados ao state
+										// "onClick" irá fazer o dispatch de uma action
+										const { checked, text, onClick } = this.props;
+										return &lt;li onClick={() => onClick(!checked)} checked={checked}&gt;{text}&lt;/li&gt;;
+									}
+								}
+							</code></pre>
+						</section>
+
+						<section>
+							<h2>Actions</h2>
+							<p>Objetos que representam comandos ou eventos ocorridos na aplicação</p>
+							<pre><code class="javascript" data-trim contenteditable style="font-size: 14px;">
+								export const loadTodos = () => ({ type: LOAD_TODOS });
+								export const todosLoaded = (todos) => ({ type: LOAD_TODOS_SUCCESS, todos});
+								export const todosLoadingError = (error: string) => ({ type: LOAD_TODOS_ERROR, error });
+							</code></pre>
+						</section>
+
+						<section>
+							<h2>Reducers</h2>
+							<p>Funções puras que processam as ações e atualizam o estado da aplicação</p>
+							<pre><code class="javascript" data-trim contenteditable style="font-size: 14px;">
+								function appReducer(state = initialState, action) {
+									switch (action.type) {
+										case LOAD_TODOS:
+											return state
+												.set('loading', true)
+												.setIn(['data', 'todos'], false);
+										case LOAD_TODOS_SUCCESS:
+											return state
+												.setIn(['data', 'todos'], action.todos)
+												.set('loading', false);
+										default:
+											return state;
+									}
+								}
+							</code></pre>
+						</section>
+
+						<section>
+							<img height="500" data-src="img/code.jpg" alt="Show me the code!">
+						</section>
+				</section>
+
+				<section>
+						<section>
+							<h2>Testes</h2>
+							<p>Testes em aplicações React são extremamente simples e diretos</p>
+						</section>
+
+						<section>
+							<h2>Testando Reducers</h2>
+							<ul>
+								<li>Reducers são funções puras!</li>
+								<li>Deve-se fazer uma chamada passando o state atual, uma action e verificar o state é igual ao esperado após a execução da action avaliando o retorno da função</li>
+							</ul>
+						</section>
+
+						<section>
+							<h2>Testando Actions</h2>
+							<ul>
+								<li>Basta utilizá-las ao testar os reducers!</li>
+							</ul>
+						</section>
+
+						<section>
+							<h2>Testando UI</h2>
+							<ul>
+								<li>Fornecer propriedades para o componente e verificar se o mesmo renderiza corretamente (ex.: algo é escondido/mostrado dependendo de uma propriedade)</li>
+								<li>Verificar chamadas de funções, passadas por propriedades, ao executar uma ação</li>
+								<li>O <a href="https://github.com/airbnb/enzyme">Enzyme</a> auxilia nesta tarefa</li>
+							</ul>
+						</section>
+				</section>
+
+				<section>
+					<h2>Links</h2>
+					<ul>
+						<li><a href="https://github.com/facebookincubator/create-react-app">Código desta apresentação</a></li>
+						<li><a href="https://github.com/facebookincubator/create-react-app">Como iniciar uma aplicação React</a></li>
+						<li><a href="https://www.gitbook.com/book/tonyhb/redux-without-profanity/details">Boas práticas Redux</a></li>
+						<li><a href="https://egghead.io/courses/getting-started-with-redux">Curso de Redux ministrado por seu criador (Dan Abramov)</a></li>
+						<li><a href="https://github.com/react-boilerplate/react-boilerplate">Boilerplate com melhores práticas React/Redux</a></li>
+					</ul>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				center: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
